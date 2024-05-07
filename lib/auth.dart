@@ -11,6 +11,20 @@ class _AuthState extends State<Auth> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+void _login() {
+    String username = _usernameController.text;
+    String password = _passwordController.text;
+
+    cont userService = new UserService();
+    cont log = userService.login(username,password);
+    if(log){
+    Navigator.pushNamed(context, '/inscri');
+    }
+
+    // Exemple d'appel de fonction pour l'authentification
+    // authenticateUser(username, password);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,9 +71,7 @@ class _AuthState extends State<Auth> {
                   width: double.infinity,
                   height: 60,
                   child: ElevatedButton(
-                    onPressed: () {
-                    Navigator.pushNamed(context, '/inscri');
-                    },
+                    onPressed:_login,
                     child: Text('Login'),
                   ),
                 ),
