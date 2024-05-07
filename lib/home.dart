@@ -12,6 +12,20 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return Auth();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Tanal sa Njit"),
+        centerTitle: true,
+      ),
+      body: Center(
+        child: Row(
+          children: [
+          ],
+        ),
+      )
+
+
+
+    );
   }
 }

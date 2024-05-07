@@ -1,6 +1,8 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../model/vote-model.dart';
+
 class VoteService {
   final String baseUrl = 'http://localhost:3000/';
 

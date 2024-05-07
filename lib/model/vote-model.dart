@@ -1,4 +1,6 @@
-class Votes {
+import 'package:vote/model/user-model.dart';
+
+class Vote {
   String? id;
   String? candidatId;
   String? userId;
@@ -6,7 +8,7 @@ class Votes {
   String? foreignKey;
   User? user;
 
-  Votes(
+  Vote(
       {this.id,
       this.candidatId,
       this.userId,
@@ -14,7 +16,7 @@ class Votes {
       this.foreignKey,
       this.user});
 
-  Votes.fromJson(Map<String, dynamic> json) {
+  Vote.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     candidatId = json['candidatId'];
     userId = json['userId'];

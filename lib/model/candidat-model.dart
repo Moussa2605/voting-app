@@ -1,3 +1,5 @@
+import 'package:vote/model/vote-model.dart';
+
 class Candidat {
   String? id;
   String? nom;
@@ -6,7 +8,7 @@ class Candidat {
   String? photo;
   String? description;
   String? programme;
-  List<Votes>? votes;
+  List<Vote>? votes;
 
   Candidat(
       {this.id,
@@ -27,9 +29,9 @@ class Candidat {
     description = json['description'];
     programme = json['programme'];
     if (json['votes'] != null) {
-      votes = <Votes>[];
+      votes = <Vote>[];
       json['votes'].forEach((v) {
-        votes!.add(new Votes.fromJson(v));
+        votes!.add(new Vote.fromJson(v));
       });
     }
   }

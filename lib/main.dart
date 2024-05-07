@@ -18,6 +18,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/auth': (context) => Auth(),
         '/inscri': (context) => Inscri(),
+        '/home': (context) => Home(),
+
 
       },
       title: 'Flutter Demo',
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
         useMaterial3: true,
       ),
-      home: Home(),
+      home: Auth(),
     );
   }
 }

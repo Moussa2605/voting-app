@@ -1,6 +1,8 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../model/candidat-model.dart';
+
 class CandidatService {
   final String baseUrl = 'httphttp://localhost:3000/';
 
@@ -11,7 +13,7 @@ class CandidatService {
       final response = await http.get(Uri.parse('$baseUrl$endpoint'));
 
       if (response.statusCode == 200) {
-        return Candidat.fromJson(response.body);
+        return Candidat.fromJson(response.body as Map<String, dynamic>);
       } else {
         throw Exception('Erreur lors de la récupération des données : ${response.statusCode}');
       }

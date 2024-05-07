@@ -1,6 +1,8 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../model/user-model.dart';
+
 class UserService {
   final String baseUrl = 'http://localhost:3000/';
 
