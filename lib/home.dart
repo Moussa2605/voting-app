@@ -1,16 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:vote/auth.dart';
+import 'package:vote/resultat.dart';
+import 'package:vote/vote.dart';
 
 import 'Details.dart';
 
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
 
-class Home extends StatelessWidget {
+class _HomeState extends State<Home> {
+  int _selectedIndex = 0;  // Default index for the first tab
+
+  // Update the selected index
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    if (index == 1) {  // Assuming this is the index for the "Voter" tab
+      Navigator.push(context, MaterialPageRoute(builder: (context) => VotePage()));
+    }
+    if (index == 2) {  // Assuming this is the index for the "Voter" tab
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Resultat()));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: Text('Candidats 2024')),
         body: CandidatesGrid(),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.handshake),
+              label: 'Voter',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.bar_chart),
+              label: 'Results',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.blue,
+          onTap: _onItemTapped,
+        ),
       ),
     );
   }
