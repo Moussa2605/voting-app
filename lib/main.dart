@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vote/Details.dart';
 import 'package:vote/auth.dart';
 import 'package:vote/inscri.dart';
 
@@ -11,6 +12,8 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  get candidates => null;
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -19,6 +22,7 @@ class MyApp extends StatelessWidget {
         '/auth': (context) => Auth(),
         '/inscri': (context) => Inscri(),
         '/home': (context) => Home(),
+        '/details': (context) => CandidateDetail(candidate: candidates),
 
 
       },
@@ -28,7 +32,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
         useMaterial3: true,
       ),
-      home: Auth(),
+      home: Home(),
     );
   }
 }
