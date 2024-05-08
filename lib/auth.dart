@@ -14,16 +14,25 @@ class _AuthState extends State<Auth> {
 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+ 
+  String username = _usernameController.text;
+  String password = _passwordController.text;
 
-void _login() {
-    String username = _usernameController.text;
-    String password = _passwordController.text;
+ Future<void> loginUser() async {
+    try {
+      final response = await http.get(Uri.parse('http://localhost:3000/login/$username/$password'));
+      if (response.statusCode == 200) {
+        List<dynamic> fetchedCandidates = json.decode(response.body);
 
-
-
-    // Exemple d'appel de fonction pour l'authentification
-    // authenticateUser(username, password);
+        return fetchCandidates;
+      } else {
+        throw Exception('Failed to load candidates');
+      }
+    } catch (e) {
+      print('Error fetching candidates: $e');
+    }
   }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +80,10 @@ void _login() {
                   width: double.infinity,
                   height: 60,
                   child: ElevatedButton(
-                    onPressed:_login,
+                    onPressed: (){
+                      final user = loginUser();
+                      Navigator.push(context, '/home')
+                    },
                     child: Text('Login'),
                   ),
                 ),
