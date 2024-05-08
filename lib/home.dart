@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:vote/auth.dart';
 import 'package:vote/resultat.dart';
 import 'package:vote/vote.dart';
+import 'package:http/http.dart' as http;
 
 import 'Details.dart';
 
@@ -56,15 +59,40 @@ class _HomeState extends State<Home> {
   }
 }
 
-class CandidatesGrid extends StatelessWidget {
-  final List<Map<String, dynamic>> candidates = [
-    {'name': 'Boubacar CAMARA', 'role': 'Douanier, Avocat', 'image': 'assets/boubacar.jpg'},
-    {'name': 'Cheikh Tidiane DIEYE', 'role': 'Docteur en Sociologie', 'image': 'assets/cheikh.jpg'},
-    {'name': 'Déthié FALL', 'role': 'Ingénieur polytechnicien', 'image': 'assets/dethie.jpg'},
-    {'name': 'Daouda NDIAYE', 'role': 'Professeur titulaire des universités', 'image': 'assets/daouda.jpg'},
-    {'name': 'Habib SY', 'role': 'Économiste', 'image': 'assets/habib.jpg'},
-    {'name': 'Khalifa Ababacar SALEH', 'role': 'Professeur d’histoire et de géographie', 'image': 'assets/khalifa.jpg'}
-  ];
+
+class CandidatesGrid extends StatefulWidget {
+  @override
+  _CandidatesGridState createState() => _CandidatesGridState();
+}
+
+class _CandidatesGridState extends State<CandidatesGrid> {
+  List<Map<String, dynamic>> candidates = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchCandidates();
+  }
+
+  Future<void> fetchCandidates() async {
+    try {
+      final response = await http.get(Uri.parse('http://localhost:3000/candidats'));
+      if (response.statusCode == 200) {
+        List<dynamic> fetchedCandidates = json.decode(response.body);
+        setState(() {
+          candidates = fetchedCandidates.map((candidate) => {
+            'name': candidate['nom'] + ' ' + candidate['prenom'],
+            'role': candidate['description'], // Assuming 'role' is described in 'description'
+            'image': candidate['photo']
+          }).toList();
+        });
+      } else {
+        throw Exception('Failed to load candidates');
+      }
+    } catch (e) {
+      print('Error fetching candidates: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,14 +112,14 @@ class CandidatesGrid extends StatelessWidget {
               ),
             );
           },
-
           child: Card(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 CircleAvatar(
                   radius: 50,
-                  backgroundImage: AssetImage(candidates[index]['image']),
+                  //"assets/images/1.jpg"
+                  backgroundImage: AssetImage("assets/images/1.jpg"),
                 ),
                 SizedBox(height: 10),
                 Text(candidates[index]['name'], style: TextStyle(fontWeight: FontWeight.bold)),

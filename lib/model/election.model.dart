@@ -1,22 +1,22 @@
- class User {
+class Election {
   String? id;
-  String? login;
-  String? password;
-  String? cni;
-  bool? isVote;
+  String ?login;
+  String ?password;
+  String ?cni;
+  bool ?isVote;
   String? nom;
-  String? prenom;
+  String ?prenom;
 
-  User(
+  Election(
       {this.id,
-      this.login,
-      this.password,
-      this.cni,
-      this.isVote,
-      this.nom,
-      this.prenom});
+        this.login,
+        this.password,
+        this.cni,
+        this.isVote,
+        this.nom,
+        this.prenom});
 
-  User.fromJson(Map<String, dynamic> json) {
+  Election.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     login = json['login'];
     password = json['password'];

@@ -1,9 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:vote/service/user.service.dart';
 
-import 'model/user-model.dart';
 
 class Auth extends StatefulWidget {
   const Auth({super.key});
@@ -13,7 +11,6 @@ class Auth extends StatefulWidget {
 }
 
 class _AuthState extends State<Auth> {
-   UserService userService = new UserService();
 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -22,10 +19,7 @@ void _login() {
     String username = _usernameController.text;
     String password = _passwordController.text;
 
-    User log = userService.login(username, password) as User;
-    if(log.id != null){
-    Navigator.pushNamed(context, '/inscri');
-    }
+
 
     // Exemple d'appel de fonction pour l'authentification
     // authenticateUser(username, password);

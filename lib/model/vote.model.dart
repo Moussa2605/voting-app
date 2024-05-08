@@ -1,6 +1,5 @@
-import 'package:vote/model/vote-model.dart';
-
-class Candidat {
+import 'package:flutter/material.dart';
+class Vote {
   String? id;
   String? nom;
   String? prenom;
@@ -8,19 +7,17 @@ class Candidat {
   String? photo;
   String? description;
   String? programme;
-  List<Vote>? votes;
 
-  Candidat(
-      {this.id,
-      this.nom,
-      this.prenom,
-      this.age,
-      this.photo,
-      this.description,
-      this.programme,
-      this.votes});
+  Vote(
+      {required this.id,
+        required this.nom,
+        required this.prenom,
+        required this.age,
+        required this.photo,
+        required this.description,
+        required this.programme});
 
-  Candidat.fromJson(Map<String, dynamic> json) {
+  Vote.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     nom = json['nom'];
     prenom = json['prenom'];
@@ -28,12 +25,6 @@ class Candidat {
     photo = json['photo'];
     description = json['description'];
     programme = json['programme'];
-    if (json['votes'] != null) {
-      votes = <Vote>[];
-      json['votes'].forEach((v) {
-        votes!.add(new Vote.fromJson(v));
-      });
-    }
   }
 
   Map<String, dynamic> toJson() {
@@ -45,9 +36,6 @@ class Candidat {
     data['photo'] = this.photo;
     data['description'] = this.description;
     data['programme'] = this.programme;
-    if (this.votes != null) {
-      data['votes'] = this.votes!.map((v) => v.toJson()).toList();
-    }
     return data;
   }
 }
