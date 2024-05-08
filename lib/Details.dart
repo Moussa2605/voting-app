@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 class CandidateDetail extends StatelessWidget {
@@ -23,7 +25,9 @@ class CandidateDetail extends StatelessWidget {
             SizedBox(height: 20),
             CircleAvatar(
               radius: 60,
-              backgroundImage: AssetImage(candidate['image']),
+              backgroundImage:Image.memory(
+                  base64Decode(candidate['image'].split(',').last)
+              ).image,
             ),
             SizedBox(height: 20),
             Text(

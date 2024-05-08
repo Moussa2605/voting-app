@@ -67,6 +67,7 @@ class CandidatesGrid extends StatefulWidget {
 
 class _CandidatesGridState extends State<CandidatesGrid> {
   List<Map<String, dynamic>> candidates = [];
+  bool isLoading = true;  // Track loading state
 
   @override
   void initState() {
@@ -76,26 +77,34 @@ class _CandidatesGridState extends State<CandidatesGrid> {
 
   Future<void> fetchCandidates() async {
     try {
+      setState(() => isLoading = true);
       final response = await http.get(Uri.parse('http://localhost:3000/candidats'));
       if (response.statusCode == 200) {
         List<dynamic> fetchedCandidates = json.decode(response.body);
         setState(() {
           candidates = fetchedCandidates.map((candidate) => {
             'name': candidate['nom'] + ' ' + candidate['prenom'],
-            'role': candidate['description'], // Assuming 'role' is described in 'description'
+            'role': candidate['description'],
             'image': candidate['photo']
           }).toList();
+          isLoading = false;
         });
       } else {
         throw Exception('Failed to load candidates');
       }
     } catch (e) {
+      setState(() => isLoading = false);
       print('Error fetching candidates: $e');
+      // Consider showing an alert dialog or a Snackbar here
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    return isLoading ? Center(child: CircularProgressIndicator()) : buildGridView();
+  }
+
+  Widget buildGridView() {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
@@ -118,8 +127,9 @@ class _CandidatesGridState extends State<CandidatesGrid> {
               children: <Widget>[
                 CircleAvatar(
                   radius: 50,
-                  //"assets/images/1.jpg"
-                  backgroundImage: AssetImage("assets/images/1.jpg"),
+                  backgroundImage: Image.memory(
+                      base64Decode(candidates[index]['image'].split(',').last)
+                  ).image,
                 ),
                 SizedBox(height: 10),
                 Text(candidates[index]['name'], style: TextStyle(fontWeight: FontWeight.bold)),
