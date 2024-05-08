@@ -38,6 +38,7 @@ class _AuthState extends State<Auth> {
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseBody = jsonDecode(response.body);
           log('Login successful');
+          print('log')
           Navigator.pushNamed(context, '/home');
       } else {
         throw Exception('Server error with status code: ${response.statusCode}');
